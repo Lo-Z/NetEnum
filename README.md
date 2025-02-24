@@ -1,12 +1,12 @@
 # NetEnum
 A Network Enumeration tool: Scan for IPs, Find Open Ports, Traceroute, and DNS Lookup.
 
----------------------------------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ --------------------------------------------
+---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
 
------------------- VERSION 1.0 ------------------- VERSION 1.0 ------------------- VERSION 1.0 ---------------
+---------------------------- VERSION 1.0 ---------------------------------
 
----------------------------------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ --------------------------------------------
- 
+---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
+
 NetEnum is a Network Enumeration tool that will check for your computers NIC and allow the selection of whichever interface you'd like to use.
 
 After selecting your NIC, you can Ping scan, ARP scan, or DNS Lookup (requires internet or Local DNS server)
@@ -21,4 +21,6 @@ Traceroute simply does it's thing.
 
 more additions to come
 
----------------------------------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ --------------------------------------------
+---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
+
+![NetEnum_Logo](https://github.com/user-attachments/assets/6ac10e19-bfc3-47b9-a744-088540f3b73c)
