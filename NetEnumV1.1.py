@@ -4,7 +4,7 @@
 # It offers who network Ping Scan, ARP Scan, and DNS Lookup.
 # With the results of either Ping or ARP Scan, Port scan and Traceroute are available as secondary scans.
 #
-# --------------------- VERSION 1.0 ------------------- VERSION 1.0 ------------------- VERSION 1.0 -----------------
+# --------------------- VERSION 1.1 ------------------- VERSION 1.1 ------------------- VERSION 1.1 -----------------
 #
 # ---------------------------------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ --------------------------------------------
 
@@ -13,7 +13,6 @@ import socket
 import ipaddress
 import threading
 import re
-
 
 # ------------------------------------------NIC_Scan ~-~Ω<(-.-)>Ω~-~ NIC_Scan----------------------------------------
 def NIC_Scanner():
@@ -67,6 +66,7 @@ if selected_NIC:
     print(f"\n{selected_NIC} - {selected_IP} / {selected_Subnet} = Armed for execution")
 
 # -------------------------------------Scan_for_IP's ~-~Ω<(-.-)>Ω~-~ Scan_for_IP's-----------------------------------
+
 def Initial_Scan_Options():
     print("\nScan for IP's")
     print("1. Ping Scan")
@@ -85,9 +85,25 @@ online_ips = []
 
 def ping(ip):
     """Pings a single IP and prints if it's online."""
-    result = subprocess.run(["cmd", "/c", "ping", "-n", "2", ip], capture_output=True, text=True, shell=False)
+    result = subprocess.run(["cmd", "/c", f"ping -a -n 3 {ip}"], capture_output=True, text=True, shell=False)
+
+    hostname = "Unknown"
+
     if f"Reply from {ip}" in result.stdout:
-        online_ips.append(ip)
+        match = re.search(r'Pinging\s+([^\[\]]+)\s+\[.*\]', result.stdout)    
+        if match:
+            extracted_hostname = match.group(1).strip()
+            if extracted_hostname and extracted_hostname != ip:  # Avoid redundant hostname = IP case
+                hostname = extracted_hostname
+                 
+        else:
+            # Fallback to reverse DNS lookup if ping -a didn't resolve the hostname
+            try:
+                hostname = socket.gethostbyaddr(ip)[0]
+            except socket.herror:
+                hostname = "Unknown"
+
+        online_ips.append((ip, hostname))
 
 def subnet_to_cidr(subnet):
     """Convert subnet mask (e.g., 255.255.255.0) to CIDR notation (/24)."""
@@ -106,9 +122,8 @@ def Ping_Scan(ip, subnet):
 
     threads = []
 
-    for ip in network.hosts():
-        ip = str(ip)
-        thread = threading.Thread(target=ping, args=(ip,))
+    for host in network.hosts():
+        thread = threading.Thread(target=ping, args=(str(host),))
         threads.append(thread)
         thread.start()
 
@@ -117,13 +132,17 @@ def Ping_Scan(ip, subnet):
 
     # Sort the online IPs numerically before printing
     global online_ips
-    online_ips = sorted(set(online_ips), key=lambda ip: tuple(map(int, ip.split("."))))
+        #online_ips = sorted(set(online_ips), key=lambda ip: tuple(map(int, ip.split("."))))
+    online_ips = sorted(set(online_ips), key=lambda x: tuple(map(int, x[0].split("."))))
 
     if online_ips:
-        print("\nOnline Hosts:")
-        for ip in online_ips:
-            print(f"✔ {ip}")
-    else:
+        print("\n✔ Online Hosts:")
+        print(f"{'IP Address':<20}{'Host Name':<30}")
+        print("=" * 50)
+        for ip, hostname in online_ips:
+            print(f"{ip:<20}{hostname:<30}")  # Ensure 'Unknown' is displayed if hostname is None
+
+    if not online_ips:
         print("\n❌ No hosts responded to Ping.")
         return False
     return True
@@ -138,6 +157,7 @@ def ARP_Scan():
     result =subprocess.run(["arp", "-a"], capture_output=True, text=True, shell=False)
 
     arp_entries = []
+    arp_ips = []
 
     for line in result.stdout.split("\n"):
         match = re.match(r"(\d+\.\d+\.\d+\.\d+)\s+([\w-]+)\s+(\w+)", line.strip())
@@ -149,9 +169,12 @@ def ARP_Scan():
                 continue
 
             arp_entries.append((ip, mac, arp_type.upper()))
-            online_ips.append(ip)
-    
-    online_ips = sorted(set(online_ips), key=lambda ip: tuple(map(int, ip.split("."))))
+            arp_ips.append((ip, "Unknown"))
+
+        online_ips.extend(arp_ips)
+        
+        online_ips = sorted(set(online_ips), key=lambda x: tuple(map(int, x[0].split(".")))) 
+        
 
     if arp_entries:
         print("\n✔ ARP Scan Results:\n")
@@ -292,9 +315,13 @@ def Port_Scanner():
             print("❌ No online devices found. Cannot proceed with port scan.")
             return []
         
-        print("\nAvailable IP's: ")
-        for index, ip in enumerate(online_ips, start=1):
-            print(f"{index}. {ip}")
+
+        print("\n✔ Available IPs:\n")
+        print(f"{'Index':<8}{'IP Address':<20}{'Host Name'}")
+        print("=" * 50)
+
+        for index, (ip, hostname) in enumerate(online_ips, start=1):
+            print(f"{index:<8}{ip:<20}{hostname}")
 
         while True:
             choice = input("\nSelect one or more IP's separated by a comma or -A for All to scan All IP's for open ports: ").strip()
@@ -304,6 +331,7 @@ def Port_Scanner():
             
             selected_indexes = [c.strip() for c in choice.split(",") if c.strip().isdigit()]
             selected_ips = [online_ips[int(i) - 1] for i in selected_indexes if 1 <= int(i) <= len(online_ips)]
+
 
             if selected_ips:
                 return selected_ips
@@ -316,7 +344,7 @@ def Port_Scanner():
         selected_ips = select_target_ips(online_ips)
     if selected_ips:
         selected_ports = get_ports()
-        for ip in selected_ips:
+        for ip, _ in selected_ips: 
             Port_Scan(ip, selected_ports)
 
 # ----------------------------------------Traceroute ~-~Ω<(-.-)>Ω~-~ Traceroute--------------------------------------
@@ -327,18 +355,21 @@ def Traceroute():
             print("❌ No online devices found. Cannot proceed with traceroute.")
             return []
         
-        print("\nAvailable IP's: ")
-        for index, ip in enumerate(online_ips, start=1):
-            print(f"{index}. {ip}")
+        print("\n✔ Available IPs:\n")
+        print(f"{'Index':<8}{'IP Address':<20}{'Host Name'}")
+        print("=" * 50)
+
+        for index, (ip, hostname) in enumerate(online_ips, start=1):
+            print(f"{index:<8}{ip:<20}{hostname}")
 
         while True:
             choice = input("\nSelect one or more IP's separated by a comma or -A for All to scan All IP's for traceroute: ").strip()
 
             if choice == "-A":
-                return online_ips
+                return [ip for ip, _ in online_ips]
             
             selected_indexes = [c.strip() for c in choice.split(",") if c.strip().isdigit()]
-            selected_ips = [online_ips[int(i) - 1] for i in selected_indexes if 1 <= int(i) <= len(online_ips)]
+            selected_ips = [online_ips[int(i) - 1][0] for i in selected_indexes if 1 <= int(i) <= len(online_ips)]
 
             if selected_ips:
                 return selected_ips
@@ -359,11 +390,11 @@ def Traceroute():
 # -----------------------Scan_Option_Selection_Logic ~-~Ω<(-.-)>Ω~-~ Scan_Option_Selection_Logic---------------------
 
 while True: 
-    # ✅ Ensure the user can always pick a scan type
+    #  Ensure the user can always pick a scan type
     if 'Init_Scan' not in locals() or Init_Scan is None:
         Init_Scan = Initial_Scan_Options()
 
-    # ✅ Handle Ping Scan Selection
+    #  Handle Ping Scan Selection
     if Init_Scan == "1":  
         Ping_Success = Ping_Scan(selected_IP, selected_Subnet)
         if not Ping_Success:
@@ -371,17 +402,17 @@ while True:
             if retry_arp.lower() == "y":
                 ARP_Scan()
 
-    # ✅ Handle ARP Scan Selection
+    #  Handle ARP Scan Selection
     elif Init_Scan == "2":  
         ARP_Scan()
 
-    # ✅ Handle DNS Lookup Selection (Standalone)
+    #  Handle DNS Lookup Selection (Standalone)
     elif Init_Scan == "3":  
         DNS_Lookup()
-        Init_Scan = None  # ✅ Reset scan type after DNS lookup to prevent auto-repeating
-        continue  # ✅ Go back to the scan selection menu
+        Init_Scan = None  #  Reset scan type after DNS lookup to prevent auto-repeating
+        continue  #  Go back to the scan selection menu
 
-    # ✅ After initial scans, allow secondary scan options if online IPs exist
+    #  After initial scans, allow secondary scan options if online IPs exist
     if online_ips:
         selected_scans = Secondary_Scan_Options()  
 
@@ -391,12 +422,12 @@ while True:
         if "2" in selected_scans:  # Traceroute Selected
             Traceroute()
 
-    # ✅ After running secondary scans, return to **initial scan menu**
+    #  After running secondary scans, return to **initial scan menu**
     select_a_different_scan = input("\nWould you like to pick another scan type? (y/n): ").strip().lower()
 
     if select_a_different_scan == "y":
-        Init_Scan = None  # ✅ Reset Initial Scan selection before looping
-        continue  # ✅ Restart the loop and go back to Initial Scan Selection
+        Init_Scan = None  #  Reset Initial Scan selection before looping
+        continue  #  Restart the loop and go back to Initial Scan Selection
     else:
         quit_program = input("\nDo you wish to quit? (y/n): ").strip().lower()
         if quit_program == "y":
