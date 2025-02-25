@@ -1,4 +1,4 @@
-# NetEnum
+# NetEnum v1.1
 A Network Enumeration tool: Scan for IPs, Find Open Ports, Traceroute, and DNS Lookup.
 
 ---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
