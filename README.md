@@ -1,17 +1,12 @@
-# NetEnum V 1.3.0
+# NetEnum V 1.3.1
+
 A Network Enumeration tool: Scan for IPs, Find Open Ports, Traceroute, and DNS Lookup.
 
 ---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
 
----------------------------- VERSION 1.3 ---------------------------------
+---------------------------- VERSION 1.3.1 -------------------------------
 
-v1.3 Updated complete scanning process, Port Scan Protocols and Probes
-
-Removed Ping scan and ARP scan and combine them for both quicker and more accurate results.
-
-Now offers the ability to save your network enumeration and port scan results
-
-to a directory of your choosing. New loading animations while scanning for IPs.
+v1.3.1 Updated Network Card Name display. Depending on the network card, the name would display incorrectly
 
 ---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
 
