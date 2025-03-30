@@ -1,18 +1,14 @@
-# NetEnum V 1.4.0
+# NetEnum V 1.5.0
 
-A Network Enumeration tool: Scan for IPs, Find Open Ports, Traceroute, and DNS Lookup.
+A Network Enumeration tool: Scan for IPs, Find Open Ports, Public IP Grabber, Traceroute, and DNS Lookup.
 
 ---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
 
----------------------------- VERSION 1.4.0 -------------------------------
+---------------------------- VERSION 1.5.0 -------------------------------
 
-v1.4.0 Added color theme, Public IP Grabber in IPv4 & IPv6, Enhanced port probing for service header responses.
+V1.5.0 Added Linux interoperability with all the same functionality of V1.4.0
 
-Added every port, service name and description rom [Iana's registry of ports and services](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml) 
-
-The Grab_Banner (Port_Grabber.py) function was separated from the NetEnum file to reduce the over all size of the NetEnum script due to the addition of all the registered ports from the Iana registry (around 6,000+ registered ports in total).
-
-An error was produced if the name of the network interface on the computer had a customized name, causing the program to crash, this has been fixed.
+See the README.md in the Linux folder for the installation guide
 
 ---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
 
