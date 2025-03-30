@@ -8,7 +8,8 @@ Note: chmod may not be needed as git preserves the executable bits, but is added
 1. git clone https://github.com/Lo-Z/NetEnum.git
 2. cd NetEnum/Linux_Folder
 3. sudo ./NetEnum_Installer.sh
-(if step 2 fails run - chmod +x NetEnum_Installer.sh - then try step 2 again.
+   
+(if step 3 fails run -" chmod +x NetEnum_Installer.sh "- then try step 3 again.)
 
 ----------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ---------------------------
 
