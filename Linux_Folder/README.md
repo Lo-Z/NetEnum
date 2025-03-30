@@ -5,13 +5,14 @@
 If you are installing NetEnum Via GIT, use the following instructions.
 Note: chmod may not be needed as git preserves the executable bits, but is added just inscase its needed.
 
-1. git clone https://github.com/Lo-Z/NetEnum/tree/main/Linux_Folder.git
-2. sudo ./NetEnum_Installer.sh
+1. git clone https://github.com/Lo-Z/NetEnum.git
+2. cd NetEnum/Linux_Folder
+3. sudo ./NetEnum_Installer.sh
 (if step 2 fails run - chmod +x NetEnum_Installer.sh - then try step 2 again.
 
 ----------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ---------------------------
 
-If you are downloaling the zip:
+If you are downloaling the zip (easier):
 
 1. unzip NetEnum_V1.5.0_Linux.zip
 2. cd NetEnum_V1.5.0_Linux
