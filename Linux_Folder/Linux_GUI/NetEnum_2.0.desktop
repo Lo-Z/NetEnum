@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=NetEnum
+Comment=Network Enumeration Tool
+Exec=/usr/local/bin/NetEnum_2.0/NetEnum_2.0
+Icon=/usr/share/icons/hicolor/256x256/apps/NetEnum_Logo.png
+Terminal=false
+Categories=Utility;
