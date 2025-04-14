@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=NetEnum CLI
+Comment=Network Enumeration Tool (Command Line)
+Exec=/usr/local/bin/NetEnum_2.0
+Icon=/usr/share/icons/hicolor/256x256/apps/NetEnum_Logo.png
+Terminal=true
+Categories=Utility;
