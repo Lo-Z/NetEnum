@@ -5,7 +5,7 @@
 If you are installing NetEnum Via GIT, use the following instructions.
 Note: chmod may not be needed as git preserves the executable bits, but is added just inscase its needed.
 
-1. git clone https://github.com/yourusername/NetEnum.git
+1. git clone https://github.com/Lo-Z/NetEnum.git
 2. sudo ./NetEnum_Installer.sh
 (if step 2 fails run - chmod +x NetEnum_Installer.sh - then try step 2 again.
 
@@ -33,7 +33,7 @@ If it still doesnt show apply the following commands
 
 #Allow file permisions
 sudo chmod 644 /usr/share/icons/hicolor/256x256/apps/NetEnum_Logo.png
-sudo chmod 644 /usr/share/applications/NetEnum_2.0.desktop
+sudo chmod 644 /usr/share/applications/NetEnum_2.0_CLI.desktop
 
 #Update the icon cache
 sudo gtk-update-icon-cache /usr/share/icons/hicolor
