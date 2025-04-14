@@ -1,11 +1,13 @@
 ----------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ---------------------------
 
+Downloading the Zip file for GUI will be the easiest way to install for linux due to the amount of dependencies 
+
 ------------------------- VERSION 2.0 FOR LINUX----------------------------
 
 If you are installing NetEnum Via GIT, use the following instructions.
 Note: chmod may not be needed as git preserves the executable bits, but is added just inscase its needed.
 
-1. git clone https://github.com/yourusername/NetEnum.git
+1. git clone https://github.com/Lo-Z/NetEnum.git
 2. sudo ./NetEnum_Installer.sh
 (if step 2 fails run - chmod +x NetEnum_Installer.sh - then try step 2 again.
 
