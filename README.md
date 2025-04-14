@@ -1,14 +1,18 @@
-# NetEnum V 1.5.0
+# NetEnum 2.0
 
 A Network Enumeration tool: Scan for IPs, Find Open Ports, Public IP Grabber, Traceroute, and DNS Lookup.
 
 ---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
 
----------------------------- VERSION 1.5.0 -------------------------------
+---------------------------- VERSION 2.0 -------------------------------
 
-V1.5.0 Added Linux interoperability with all the same functionality of V1.4.0
+V 2.0 now has a GUI
 
-See the README.md in the Linux folder for the installation guide
+Your choice of CLI or GUI for either Windows or Linux (Not tested for macOS yet)
+
+Windows can have both the CLI and GUI versions installed at the same time
+
+The Linux version can have either or /can not have both installed at the same time.
 
 ---------------------- ~ - ~ Ω <(-.-)> Ω ~ - ~ ----------------------------
 
@@ -18,7 +22,7 @@ After selecting your NIC, you can scan for IPs, or DNS Lookup, or grab the publi
 
 Once IPs are enumerated you can select either a Port scan, or Traceroute.
 
-Choose one, multiple, or -A for All IPs
+Choose one, multiple, or All IPs
 
 Selecting a specific port to scan, Multiple separated by a comma, or -A for all 65,535 ports. With Probe data to get a service header response. If no response is given but the port is open,  "Probe Header Attempt Failed (Common Service: service_name)" will be displayed.
 
@@ -33,3 +37,7 @@ more additions to come...
 ![image](https://github.com/user-attachments/assets/901c56e1-081c-40f2-b986-c993cdea502b)
 
 ![image](https://github.com/user-attachments/assets/e698bd11-e929-4f8d-a442-b18c3323f4fb)
+
+![image](https://github.com/user-attachments/assets/d2734c50-837f-4cf1-8e8a-b259eb684bd6)
+
+
